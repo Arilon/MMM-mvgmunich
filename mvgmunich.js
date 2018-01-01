@@ -85,11 +85,20 @@ Module.register("mvgmunich", {
           var hoursStr = (time.getHours() < 10 ? '0' : '') + time.getHours();
           var minutesStr = (time.getMinutes() < 10 ? '0' : '') + time.getMinutes();
 
-          transport += "<tr class='normal'>";
-          transport += "<td>" + transportItems[i].line + "</td>" + "<td class='stationColumn'>" + transportItems[i].station + "</td>" + "<td>" + transportItems[i].time + "</td>";
+          var tr = "<tr class='normal' style='color: #fff;'>";
+          var stCol = "<td class='stationColumn'>";
 
           if (this.config.includeWalkingTime) {
+            if (this.config.timeToWalk > transportItems[i].time) {
+              tr = "<tr class='normal' style='color: #666;'>";
+              stCol = "<td class='stationColumn' style='color: #666'>";
+            } 
+            transport += tr;
+            transport += "<td>" + transportItems[i].line + "</td>" + stCol + transportItems[i].station + "</td>" + "<td>" + transportItems[i].time + "</td>";
             transport += "<td>" + hoursStr + ":" + minutesStr + "</td>";
+          } else {
+            transport += tr;
+            transport += "<td>" + transportItems[i].line + "</td>" + stCol + transportItems[i].station + "</td>" + "<td>" + transportItems[i].time + "</td>";
           }
 
           transport += "</tr>";
